@@ -3,4 +3,5 @@
 
 set -e
 
+source ./venv/bin/activate
 python -m digits $@
