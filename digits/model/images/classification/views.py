@@ -512,6 +512,8 @@ def classify_many():
                     'Unable to classify any image from the file')
 
         scores = last_output_data
+        scores = scores.reshape(scores.shape[:2])
+        
         # take top 5
         indices = (-scores).argsort()[:, :5]
 
@@ -520,7 +522,6 @@ def classify_many():
 
         # remove invalid ground truth
         ground_truths = [x if x is not None and (0 <= x < n_labels) else None for x in ground_truths]
-
         # how many pieces of ground truth to we have?
         n_ground_truth = len([1 for x in ground_truths if x is not None])
         show_ground_truth = n_ground_truth > 0
