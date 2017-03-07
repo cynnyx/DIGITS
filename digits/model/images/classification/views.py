@@ -513,7 +513,7 @@ def classify_many():
 
         scores = last_output_data
         scores = scores.reshape(scores.shape[:2])
-        
+
         # take top 5
         indices = (-scores).argsort()[:, :5]
 
@@ -643,6 +643,7 @@ def top_n():
         # convert to class probabilities for viewing
         last_output_name, last_output_data = outputs.items()[-1]
         scores = last_output_data
+        scores = scores.reshape(scores.shape[:2])
 
         if scores is None:
             raise RuntimeError('An error occured while processing the images')
