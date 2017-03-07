@@ -385,14 +385,23 @@ def parse_folder(folder, labels_file,
                 lines.append('%s %d' % (url, label_index))
         else:
             for dirpath, dirnames, filenames in os.walk(os.path.join(folder, subdir), followlinks=True):
+                #for filename in filenames:
+                #    if filename.lower().endswith(utils.image.SUPPORTED_EXTENSIONS):
+                #        lines.append('%s %d' % (os.path.join(folder, subdir, dirpath, filename), label_index))
+                #        if max_per_category is not None and len(lines) >= max_per_category:
+                #            break
+                #if max_per_category is not None and len(lines) >= max_per_category:
+                #    logger.warning('Reached maximum limit for this category')
+                #    break
                 for filename in filenames:
                     if filename.lower().endswith(utils.image.SUPPORTED_EXTENSIONS):
                         lines.append('%s %d' % (os.path.join(folder, subdir, dirpath, filename), label_index))
-                        if max_per_category is not None and len(lines) >= max_per_category:
-                            break
-                if max_per_category is not None and len(lines) >= max_per_category:
-                    logger.warning('Reached maximum limit for this category')
+                if len(lines) > 1000000:
+                    logger.warning('Infinite looping in file system, you won')
                     break
+
+        random.shuffle(lines)
+        lines = lines[:max_per_category]
 
         ### Split up the lines
 
